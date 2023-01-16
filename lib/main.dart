@@ -1,4 +1,10 @@
+import 'dart:html';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import '../screens/inkwell.dart';
+import '../screens/Text.dart';
+import '../screens/column.dart';
+import '../screens/row.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,64 +14,81 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Navigation Over Screens',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-//      home: MainPage(),
-
-      // Declare routes
-      routes: {
-        // Main initial route
-        '/': (context) => MainPage(),
-        // Second route
-        '/second': (context) => SecondPage(),
-      },
-      initialRoute: '/',
+      home: MyHomePage(),
     );
   }
 }
 
-class MainPage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) =>
-      Scaffold(
-        appBar: AppBar(
-          title: Text('Navigation over screens'),
-        ),
-        body: Container(
-          child: Column(
-            children: <Widget>[
-              // Navigate using declared route name
-              ElevatedButton(
-                onPressed: () => Navigator.pushNamed(context, '/second'),
-                child: Text('Navigate using routes'),
-              ),
-              // Navigate using simple push method
-              ElevatedButton(
-                onPressed: () =>
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SecondPage()),
-                    ),
-                child: Text('Navigate using push method'),
-              )
-            ],
-          ),
-        ),
-      );
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class SecondPage extends StatelessWidget {
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Second screen'),
+        title: const Text('Task 3'),
       ),
-      body: Container(
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text("Inkwell Widget"),
+            onTap: () => {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => inkwellWi())),
+            },
+          ),
+          ListTile(
+            title: Text("Text Widget"),
+            onTap: () => {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => TextWi())),
+            },
+          ),
+          ListTile(
+            title: Text("Column layout"),
+            onTap: () => {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => columnWi())),
+            },
+          ),
+          ListTile(
+            title: Text("Row"),
+            onTap: () => {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => rowWi())),
+            },
+          ),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => Null,
+        label: Text("Task Four Page"),
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  const SecondRoute({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+      ),
+      body: Center(
         child: ElevatedButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text('Back'),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: const Text('Go back!'),
         ),
       ),
     );
